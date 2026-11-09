@@ -1,8 +1,9 @@
 {"events": [
   {"t": 0.2, "paste": "First copied text"},
   {"t": 0.6, "paste": {"text": "Bold note", "html": "<b>Bold</b> note"}},
-  {"t": 1.2, "type": "tap", "key": "clip-0/pin"},
-  {"t": 1.8, "type": "tap", "key": "search"},
-  {"t": 2.0, "type": "type", "text": "bold"},
+  {"t": 1.0, "type": "move", "key": "clip-0"},
+  {"t": 1.3, "type": "key", "name": "p", "alt": true},
+  {"t": 1.8, "type": "move", "key": "clip-1"},
+  {"t": 2.0, "type": "key", "name": "c", "alt": true},
   {"t": 2.6, "type": "mark", "name": "end"}
 ]}

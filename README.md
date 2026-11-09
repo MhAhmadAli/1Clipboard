@@ -10,8 +10,17 @@
 **1Clipboard is a native clipboard history manager written in Rust with [Rune](https://github.com/anomalyco/rune)**, a GPU-rendered UI framework for macOS, Windows and Linux. It replaces the earlier Electron + Angular + ngrx + PouchDB version.
 
 - Watches the clipboard and keeps what you copy, newest first (plain text, HTML and images).
-- Click a clip (or **Copy**) to put it back on the clipboard, with its formatting.
-- **Pin** clips to keep them at the top; **Clear** removes everything that isn't pinned.
+- Click a clip to put it back on the clipboard, with its formatting.
+- Keyboard shortcuts act on the clip under the pointer (the hovered row lists them):
+
+  | Shortcut | Action |
+  | --- | --- |
+  | Alt+C (⌥C) | Copy it back to the clipboard |
+  | Alt+P (⌥P) | Pin it to the top, or unpin it if it's pinned |
+  | Alt+D (⌥D) | Delete it |
+
+  They work even while the search field has focus; with no clip hovered, keys type as usual.
+- **Clear** removes everything that isn't pinned.
 - Search as you type. Cmd/Ctrl-V into the window, or **Add clipboard**, adds the current clipboard.
 - History is saved as JSON in your data folder (`~/.local/share/1Clipboard/history.json`, `~/Library/Application Support/1Clipboard/`, or `%APPDATA%\1Clipboard\`), or wherever `ONECLIPBOARD_HISTORY` points. Images are kept for the session only.
 
@@ -28,10 +37,10 @@ Rust is pinned in `rust-toolchain.toml`; `rustup` installs it on first build. On
 ```sh
 cargo test                     # model + UI tests on Rune's headless runtime, with an in-memory clipboard
 B=target/release/oneclipboard
-$B --list-scenes               # sample, search, copied
+$B --list-scenes               # sample, search, copied, hover
 $B --snap out.png --scene sample              # render to PNG with no window
 $B --tree tree.json --scene sample            # dump the element tree
-$B --script scripts/demo.json --snap end.png --at mark:end   # scripted paste, pin and search
+$B --script scripts/demo.json --snap end.png --at mark:end   # scripted paste, hover, Alt+P and Alt+C
 ```
 
 Headless runs never read or write the saved history. Without a GPU, use a software Vulkan driver, e.g. `VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json`.
