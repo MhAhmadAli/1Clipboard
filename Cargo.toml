@@ -1,0 +1,23 @@
+[package]
+name = "oneclipboard"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "1Clipboard: a clipboard history manager built with Rune"
+
+[[bin]]
+name = "oneclipboard"
+path = "src/main.rs"
+
+[dependencies]
+# Rune is pre-release: pin a rev of `dev` (never rewritten).
+rune = { git = "https://github.com/anomalyco/rune", rev = "a5e45a4e4b0c20c1692842ced919e01df71f0618" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.dev.package."*"]
+debug = false
+
+[profile.release]
+codegen-units = 16
+incremental = true

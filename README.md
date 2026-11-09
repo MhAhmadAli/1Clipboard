@@ -2,18 +2,43 @@
   <img src="./resources/github/icon.png" alt="1Clipboard" width="120">
   <h1 align="center">1Clipboard</h1>
   <p align="center"><b>A universal clipboard managing app that makes it easy to access your clipboard from anywhere on any device.</b></p>
-  <p align="center"><img src="./resources/github/app.png" width="512"></p>
+  <p align="center"><img src="./resources/github/app-rune.png" width="512"></p>
 </p>
 
 # 1Clipboard
 
-**1Clipboard is Electron based modern web application written by Typescript using Angular4 (angular-cli) + ngrx (redux for Angular) + PouchDB.** I can't say this project is the best example, but anyway it is worth to look for those who are going to use Angular framework as their native application. This project is still a work in progress and not yet ready for production.
+**1Clipboard is a native clipboard history manager written in Rust with [Rune](https://github.com/anomalyco/rune)**, a GPU-rendered UI framework for macOS, Windows and Linux. It replaces the earlier Electron + Angular + ngrx + PouchDB version.
+
+- Watches the clipboard and keeps what you copy, newest first (plain text, HTML and images).
+- Click a clip (or **Copy**) to put it back on the clipboard, with its formatting.
+- **Pin** clips to keep them at the top; **Clear** removes everything that isn't pinned.
+- Search as you type. Cmd/Ctrl-V into the window, or **Add clipboard**, adds the current clipboard.
+- History is saved as JSON in your data folder (`~/.local/share/1Clipboard/history.json`, `~/Library/Application Support/1Clipboard/`, or `%APPDATA%\1Clipboard\`), or wherever `ONECLIPBOARD_HISTORY` points. Images are kept for the session only.
+
+## Build and run
+
+```sh
+cargo run --release
+```
+
+Rust is pinned in `rust-toolchain.toml`; `rustup` installs it on first build. On Linux, install the build dependencies first (Debian/Ubuntu: `apt-get install libxkbcommon-dev libwayland-dev`; windowed runs also need `libxkbcommon-x11-0`).
+
+## Testing
+
+```sh
+cargo test                     # model + UI tests on Rune's headless runtime, with an in-memory clipboard
+B=target/release/oneclipboard
+$B --list-scenes               # sample, search, copied
+$B --snap out.png --scene sample              # render to PNG with no window
+$B --tree tree.json --scene sample            # dump the element tree
+$B --script scripts/demo.json --snap end.png --at mark:end   # scripted paste, pin and search
+```
+
+Headless runs never read or write the saved history. Without a GPU, use a software Vulkan driver, e.g. `VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json`.
 
 ## Note
 
-I am currently working on this project from scratch with the newer web technology, so the source code is different from the released version.
-I am going to open this project as a public repository in the future when it is ready.
-If you want to access to the current private repo, please contact me with your github account. 
+The released version on [1clipboard.io](http://1clipboard.io) is the older Electron app.
 
 ## Download
 
